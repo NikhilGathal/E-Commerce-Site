@@ -13,6 +13,7 @@ import {
   updateAllProducts,
 } from '../store/slices/productsSlice'
 import { useOutletContext } from 'react-router-dom'
+import ProductShimmer from '../components/ProductShimmer'
 
 export default function Home() {
   const [query, setquery] = useState('')
@@ -121,6 +122,7 @@ useEffect(() => {
 
   const productsList = useSelector(getAllProducts)
   const isLoading = useSelector(getProductLoadingState)
+  // const isLoading = 1
   const error = useSelector(getProductError)
   return (
     <main className={` ${dark ? 'dark' : ''}`}>
@@ -130,8 +132,10 @@ useEffect(() => {
       </div>
 
       {/* Render loading message */}
-      {isLoading && <h1 className='home-error'>Loading...</h1>}
+      {/* {isLoading && <h1 className='home-error'>Loading...</h1>} */}
 
+      {isLoading && <ProductShimmer/>}
+      
       {/* Render error message, but keep search and select menu visible */}
       {error && !isLoading && <h2 className='home-error'>{error}</h2>}
 
