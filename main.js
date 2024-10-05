@@ -10,6 +10,9 @@ import OrderPlace from './components/OrderPlace'
 import AboutUs from './components/About'
 import ContactUs from './components/Contact'
 import ItemDetail from './components/ItemDetail'
+import ContactForm from './components/ContactForm'
+
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -25,31 +28,37 @@ const router = createBrowserRouter([
       },
       {
         path: '/wish',
-        element: <Wish/>,
+        element: <Wish />,
       },
       {
         path: '/Order',
-        element: <OrderPlace/>,
+        element: <OrderPlace />,
       },
       {
         path: '/about',
-        element: <AboutUs/>,
+        element: <AboutUs />,
       },
       {
         path: '/contact',
-        element: <ContactUs/>,
+        element: <ContactUs />,
+        children: [
+          {
+            path: 'feedback',  // Nested route for /contact/form
+            element: <ContactForm />,
+          },
+        ]
       },
       {
         path: '/:itemId',
-        element: <ItemDetail/>,
-        
+        element: <ItemDetail />,
       },
     ],
   },
 ])
-
 createRoot(document.querySelector('#root')).render(
   <Provider store={store}>
     <RouterProvider router={router} />
   </Provider>
 )
+
+
