@@ -19,7 +19,7 @@ export default function Wishitem({ productId, title, rating, price, imageUrl, qu
       <div className="item-quantity">
         {/* <button onClick={() => dispatch(decreaseCartItemQuantity(productId))}></button> */}
         {/* <span>{quantity}</span> */}
-        <button onClick={() => dispatch(removeWishItem(productId))}>Remove</button>
+        <button onClick={() => dispatch(removeWishItem({productId}))}>Remove</button>
       </div>
       <div className="item-total"></div>
     </div>

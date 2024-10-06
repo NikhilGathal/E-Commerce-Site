@@ -79,23 +79,22 @@ export default function Header({ dark ,isdark }) {
     //   })
   }, [])
   const cartItems = useSelector((state) => state.cartItems.list)
+  // console.log(cartItems);
   const wish = useSelector((state) => state.wishList.list)
   // console.log(wish);
+
+
   
   // const dark = false
   return ( 
     <header className={`header-container head ${dark ? 'dark' : ''} `}>
       <div className="header-contents">
-        <h1 className='H'>
-          <Link onClick={() => {
-          //  setquery('')
-           dispatch(fetchProductdata())
-           console.log('clicked');
-           
-          }
-          }
-             to="/">Shopee</Link>
-        </h1>
+       <Link to= "/" >  <h1 onClick={() => {
+    //  setquery('')
+     dispatch(fetchProductdata())
+     console.log('clicked');
+    }
+    }   className='H'> Shopee </h1> </Link>
         <i onClick={ ()=> 
           {
             localStorage.setItem('isdarkmode', !dark)
