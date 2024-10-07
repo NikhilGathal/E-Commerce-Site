@@ -84,6 +84,6 @@ textarea {
   margin: 0;
 }
 
-/* .contact-button:hover {
-  background-color: #0056b3;
-} */
+.contact-button:hover {
+  background-color: #898989;
+}

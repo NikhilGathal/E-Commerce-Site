@@ -171,6 +171,7 @@ button {
   padding-inline: 40px;
   padding-block: 13px;
 }
+
 .item-wish
 {
      margin: 25px;
@@ -246,13 +247,13 @@ button {
 }
 
 .continue:hover {
-  transform: scale(1.06); /* Only scale on hover */
+  /* transform: scale(1.06); Only scale on hover */
   background-color: #898989; /* Change background color */
   color: white;
 }
 .empty-cart button:hover 
 {
-  transform: scale(1.06);
+  /* transform: scale(1.06); */
   background-color: #898989;
   color: white;
 }
