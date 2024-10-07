@@ -14,7 +14,7 @@ export default function Wish() {
     // Simulate data fetching (if you're getting cart items from an API/localStorage, etc.)
     const fetchCartItems = async () => {
       // Simulate async action (like fetching from Redux store or localStorage)
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 300));
       setIsLoading(false);
     };
   
