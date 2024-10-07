@@ -49,7 +49,8 @@ export default function Product({ productId, title, rating, price, imageUrl }) {
         >
           Add to Cart
         </button>
-        <button onClick={() => {
+        <button 
+        onClick={() => {
           let storedWish = JSON.parse(localStorage.getItem('wishItems')) || [];
           const existingProductIndex = storedWish.findIndex(item => item.productId === productId);
           if (existingProductIndex !== -1) {

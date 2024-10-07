@@ -31,6 +31,8 @@ const slice = createSlice({
       state.list = []
     },
     addCartItem(state, action) {
+      console.log(action);
+      
       const existingItemIndex = findItemIndex(state.list, action)
       if (existingItemIndex !== -1) state.list[existingItemIndex].quantity += 1
       else state.list.push({ ...action.payload, quantity: 1 })
@@ -54,18 +56,37 @@ const slice = createSlice({
   },
 })
 
-const getCartItems = ({ products, cartItems }) => {
+
+
+ const getCartItems = ({ products, cartItems }) => {
   return cartItems.list
     .map(({ productId, quantity }) => {
       const cartProduct = products.list.find(
-        (product) => product.id === productId
+        (product) => {
+          console.log(product.id, productId);
+          // console.log(product.id === productId);
+        return  product.id === productId
+         
+          
+        }
+       
+        
       )
+      console.log(cartProduct);
+      
       return { ...cartProduct, quantity }
+     
     })
     .filter(({ title }) => title)
 }
 
-export const getAllCartItems = createSelector(getCartItems, (cartItems) => cartItems)
+export const getAllCartItems = createSelector(getCartItems, (cartItems) => {
+// console.log(cartItems);
+ return cartItems
+} )
+// console.log(getCartItems());
+
+
 
 export const getCartLoadingState = (state) => state.products.loading
 export const getCartError = (state) => state.products.error

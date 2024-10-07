@@ -92,7 +92,7 @@ export default function Header({ dark ,isdark }) {
        <Link to= "/" >  <h1 onClick={() => {
     //  setquery('')
      dispatch(fetchProductdata())
-     console.log('clicked');
+    //  console.log('clicked');
     }
     }   className='H'> Shopee </h1> </Link>
         <i onClick={ ()=> 

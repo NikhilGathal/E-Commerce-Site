@@ -104,8 +104,12 @@ button {
   cursor: pointer;
   background-color: var(--elements-color);
   color: var(--text-color);
+  transition: all 0.4s ease-in-out;
+}
 
- 
+button:hover
+{
+  background-color:#898989 ;
 }
 .place {
   cursor: pointer;
@@ -129,10 +133,6 @@ button {
   ); /* Full viewport height to ensure vertical centering */
 }
 
-.orderplace
-{
-  
-}
 .home-error {
   font-weight: bold;
   font-size: larger;
@@ -193,33 +193,7 @@ button {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-/* .orderplace
-{
-  font-size: 45px;
-  white-space: nowrap;
-  font-weight: bold;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.continue
-{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin-top: 80px;
-  transition: all 0.4s ease-in-out;
-  border-radius: 50;
-  padding-inline: 40px;
-  padding-block: 13px;
-}
-.continue:hover 
-{
-  transform: scale(1.06);
-  background-color: #898989;
-} */
+
 
 .orderplace {
   font-size: 45px;
@@ -229,6 +203,15 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+
+.item-button
+{
+  margin-top: 32px;
+  display: flex;
+  /* gap: 60px; */
+  justify-content: space-evenly;
 }
 
 .button-wrapper {

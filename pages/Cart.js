@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   getAllCartItems,
   getCartError,
+  getCartItems,
   getCartLoadingState,
   loadCartItems,
   removeallCartItem,
@@ -18,7 +19,10 @@ import { useEffect } from 'react'
 export default function Cart() {
   const [query, setquery, dark, isdark] = useOutletContext()
 
+
   const cartItems = useSelector(getAllCartItems)
+  console.log(cartItems);
+  
   // const isLoading = useSelector(getCartLoadingState) // Loading state selector
   const error = useSelector(getCartError)            // Error state selector
   const dispatch = useDispatch()
@@ -31,13 +35,12 @@ useEffect(() => {
     await new Promise((resolve) => setTimeout(resolve, 100));
     setIsLoading(false);
   };
-
   fetchCartItems();
 }, []);
 
-// if (isLoading) {
-//   <h1 style={{ textAlign: 'center' }}>Loading Cart items...</h1>
-// }
+if (isLoading) {
+  <h1 style={{ textAlign: 'center' }}>Loading Cart items...</h1>
+}
 
   // Logic to avoid showing "Cart is Empty" before data is loaded
   return (
