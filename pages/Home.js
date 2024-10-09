@@ -3,6 +3,7 @@ import SearchBar from '../components/SearchBar'
 import SelectMenu from '../components/SelectMenu'
 import { useDispatch, useSelector } from 'react-redux'
 import Product from '../components/Product'
+import ModalSign from '../components/ModalSign'
 import {
   fetchProductdata,
   fetchProducts,
@@ -14,12 +15,13 @@ import {
 } from '../store/slices/productsSlice'
 import { useOutletContext } from 'react-router-dom'
 import ProductShimmer from '../components/ProductShimmer'
+import Footer from '../components/Footer'
 
 export default function Home() {
   const [query, setquery] = useState('')
   const [query1, setquery1] = useState('')
 
-  const [dark] = useOutletContext()
+  const [setissign,dark] = useOutletContext()
   // console.log(query);
 
   const dispatch = useDispatch()
@@ -57,7 +59,13 @@ useEffect(() => {
   return () => clearTimeout(delayDebounceFn); // Cleanup the timeout on query change
 }, [query, dispatch,query1]);
 
-    
+useEffect(() => {
+  const modalTimeout = setTimeout(() => {
+    setissign(true) // Show modal
+  }, 2000)
+
+  return () => clearTimeout(modalTimeout) // Cleanup timeout on unmount
+}, [setissign]) // Empty dependency to run only once
 
   // useEffect(() => {
   //   if (query) {
@@ -125,7 +133,9 @@ useEffect(() => {
   // const isLoading = 1
   const error = useSelector(getProductError)
   return (
-    <main className={` ${dark ? 'dark' : ''}`}>
+  
+  <>
+     <main className={` ${dark ? 'dark' : ''}`}>
       <div className="search-filter-container">
         <SearchBar query={query} setquery={setquery} />
         <SelectMenu setquery1={setquery1} setquery={setquery} />
@@ -155,6 +165,9 @@ useEffect(() => {
         </div>
       )}
     </main>
+    <Footer dark={dark}/>
+  </>
+   
   )
   
   // isLoading ? (

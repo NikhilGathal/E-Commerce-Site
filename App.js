@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom'
 import './App.css'
 
 export default function App() {
+  const [issign, setissign] = useState(false)
   // const [dark ,isdark] = useState(false)
   const [dark, isdark] = useState(JSON.parse(localStorage.getItem('isdarkmode')))
   useEffect(() => {
@@ -24,8 +25,8 @@ export default function App() {
     <>
      
       <div className={`app-container ${dark ? 'dark' : ''}`}>
-      <Header dark={dark} isdark={isdark} />
-      <Outlet  context={[dark, isdark] }/>
+      <Header issign={issign} setissign={setissign} dark={dark} isdark={isdark} />
+      <Outlet  context={[setissign,dark, isdark] }/>
     </div>
      
     </>

@@ -15,8 +15,8 @@ import ModalSign from './ModalSign'
 import ModalLogin from './ModalLogin'
 import { addWishItem, loadWishItem } from '../store/slices/wishListSlice'
 
-export default function Header({ dark ,isdark }) {
-  const [issign, setissign] = useState(false)
+export default function Header({issign,setissign, dark ,isdark }) {
+  // const [issign, setissign] = useState(false)
   const [islog, setislog] = useState(false)
 
   const dispatch = useDispatch()
