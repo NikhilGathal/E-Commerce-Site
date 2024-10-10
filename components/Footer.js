@@ -1,6 +1,6 @@
 import React from 'react';
 import './footer.css'; // You will style it in this CSS file
-import shop from '../assets/sho.jpg'
+import shop from '../assets/Sho.jpg'
 const Footer = ({dark}) => {
   return (
     <footer className={`footer ${dark ? 'dark' : ''}`}>
