@@ -109,6 +109,7 @@ button {
 
 button:hover
 {
+  color: white;
   background-color:#898989 ;
 }
 .place {

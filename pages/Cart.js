@@ -17,11 +17,11 @@ import { Link, useOutletContext } from 'react-router-dom'
 import { useEffect } from 'react'
 
 export default function Cart() {
-  const [query, setquery, dark, isdark] = useOutletContext()
+  const [, dark] = useOutletContext()
 
 
   const cartItems = useSelector(getAllCartItems)
-  console.log(cartItems);
+  // console.log(cartItems);
   
   // const isLoading = useSelector(getCartLoadingState) // Loading state selector
   const error = useSelector(getCartError)            // Error state selector

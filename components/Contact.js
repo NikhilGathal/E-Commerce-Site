@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 
 const ContactUs = () => {
-    const [dark] = useOutletContext()
+    const [, dark] = useOutletContext()
     const [formData, setFormData] = useState({
         name: '',
         email: '',

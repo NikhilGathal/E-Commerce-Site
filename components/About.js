@@ -3,7 +3,7 @@ import './About-Contact.css'
 import { useOutletContext } from 'react-router-dom';
 
 const AboutUs = () => {
-  const [ dark] = useOutletContext()
+  const [, dark] = useOutletContext()
 
   return (
     <div className= {`about-us-container ${ dark ? 'dark' : ''}`}>

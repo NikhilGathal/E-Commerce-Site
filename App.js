@@ -26,7 +26,7 @@ export default function App() {
      
       <div className={`app-container ${dark ? 'dark' : ''}`}>
       <Header issign={issign} setissign={setissign} dark={dark} isdark={isdark} />
-      <Outlet  context={[setissign,dark, isdark] }/>
+      <Outlet  context={[setissign,dark, isdark,issign] }/>
     </div>
      
     </>
