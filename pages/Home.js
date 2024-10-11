@@ -22,7 +22,7 @@ export default function Home() {
   const [query1, setquery1] = useState('')
 
   const [setissign,dark,isdark,issign] = useOutletContext()
-  console.log(issign);
+  // console.log(issign);
 
   const dispatch = useDispatch()
 

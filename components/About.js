@@ -6,7 +6,8 @@ const AboutUs = () => {
   const [, dark] = useOutletContext()
 
   return (
-    <div className= {`about-us-container ${ dark ? 'dark' : ''}`}>
+   <main className='about-main'>
+     <div className= {`about-us-container ${ dark ? 'dark' : ''}`}>
       <h1>About Us</h1>
       <p>
         Welcome to Shopee, where we are passionate about providing our customers with the best shopping experience possible.
@@ -25,6 +26,7 @@ const AboutUs = () => {
         <li>Customer Satisfaction: Your happiness is our top priority.</li>
       </ul>
     </div>
+   </main>
   );
 };
 

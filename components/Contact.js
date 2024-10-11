@@ -42,7 +42,8 @@ const ContactUs = () => {
     return (
         <>
             {!isFormRoute && (
-                <div className={`contact-us-container ${dark ? 'dark' : ''}`}>
+               <main className='contact-main'>  
+                 <div className={`contact-us-container ${dark ? 'dark' : ''}`}>
                     <h1>Contact Us</h1>
                     <p style={{ textAlign: 'center' }}>If you have any questions or feedback, please reach out to us!</p>
 
@@ -80,6 +81,8 @@ const ContactUs = () => {
                         <button className='contact-button' type="submit">Submit</button>
                     </form>
                 </div>
+
+               </main>
             )}
             <Outlet />
             {/* Always render the outlet to allow for nested routes */}

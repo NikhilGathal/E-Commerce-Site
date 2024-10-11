@@ -87,3 +87,54 @@ textarea {
 .contact-button:hover {
   background-color: #898989;
 }
+
+@media(max-width : 590px)
+{
+  .value {
+    font-size: 13px;
+    gap: 10px;
+  }
+  .about-us-container {
+    padding: 20px;
+    max-width: 300px;
+    margin: auto;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin-top: 28px;
+    font-size: 13px;
+  }
+
+}
+
+@media(max-width : 590px)
+{
+  .contact-us-container {
+    padding: 28px;
+    padding-inline: 44px;
+    padding-bottom: 44px;
+    max-width: 300px;
+    margin: auto;
+    color: var(--text-color);
+    background-color:var(--background-color);
+    margin-top: 28px;
+  }
+
+  
+h1 {
+ font-size: 20px;
+}
+
+p {
+  line-height: 1.6;
+  font-size: 12px;
+}
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+
+}

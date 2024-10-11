@@ -16,7 +16,7 @@ const ItemDetail = () => {
     const [item, setItem] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [dark] = useOutletContext()
+    const [,dark] = useOutletContext()
     useEffect(() => {
         const fetchItem = async () => {
             try {

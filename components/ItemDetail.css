@@ -7,6 +7,7 @@
     margin: 0 auto;
     gap: 36px;
     color: var(--text-color) ;
+    font-size: 20px;
 }
 
 
@@ -20,12 +21,14 @@
 .item-info {
     margin-top: 2rem;
     text-align: center;
+   
 }
 
 .item-info h1 {
-    font-size: 2.5rem;
+    /* font-size: 2.5rem; */
     font-weight: bold;
     margin-bottom: 1rem;
+    font-size: 30px;
 }
 
 .item-price {
@@ -36,9 +39,10 @@
 }
 
 .item-description {
-    font-size: 1.25rem;
+    /* font-size: 1.25rem; */
     line-height: 1.6;
     margin-bottom: 1.5rem;
+    font-size: 20px;
 }
 
 .item-category {
@@ -50,4 +54,33 @@
 .item-rating {
     font-size: 1.1rem;
     color: rgb(249, 123, 81);
+}
+
+
+@media (max-width: 1067px)
+{
+    .item-info h1 {
+       
+        font-weight: bold;
+        margin-bottom: 1rem;
+        font-size: 25px;
+    }
+
+    .item-description {
+       
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        font-size: 15px;
+    }
+
+}
+
+
+@media  (max-width: 844px)
+{
+
+    .item-detail-container
+    {
+        flex-direction: column;
+    }
 }

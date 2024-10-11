@@ -14,10 +14,14 @@ import { fetchdata } from '../store/middleware/api'
 import ModalSign from './ModalSign'
 import ModalLogin from './ModalLogin'
 import { addWishItem, loadWishItem } from '../store/slices/wishListSlice'
+import Hamburger from './Hamburger'
 
-export default function Header({issign,setissign, dark ,isdark }) {
+export default function Header({ issign, setissign, dark, isdark }) {
   // const [issign, setissign] = useState(false)
   const [islog, setislog] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
+
+
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -46,13 +50,13 @@ export default function Header({issign,setissign, dark ,isdark }) {
 
     // dispatch( fetchCartItemsdata())
 
-    let storedCart = JSON.parse(localStorage.getItem('cartItems')) || []; 
+    let storedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
     // console.log(storedCart);
     dispatch(loadCartItemsFromLocal(storedCart))
 
     let storedWish = JSON.parse(localStorage.getItem('wishItems')) || []
     // console.log(storedWish);
-    
+
     dispatch(loadWishItem(storedWish))
 
 
@@ -84,27 +88,66 @@ export default function Header({issign,setissign, dark ,isdark }) {
   // console.log(wish);
 
 
-  
-  // const dark = false
-  return ( 
-    <header className={`header-container head ${dark ? 'dark' : ''} `}>
-      <div className="header-contents">
-       <Link to= "/" >  <h1 onClick={() => {
-    //  setquery('')
-     dispatch(fetchProductdata())
-    //  console.log('clicked');
+  const toggleMenu = (e) => {
+    e.stopPropagation(); // Stop the click event from propagating
+    setMenuOpen((prevState) => !prevState); // Toggle the menu open state
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false); // Close the menu
+  };
+
+  const handleHeaderClick = (e) => {
+    // If the menu is open and the click is within the header, do not close it
+    console.log('Header');
+   
+    if (menuOpen && !e.target.closest('.header-contents')) {
+      e.stopPropagation(); // Prevent event bubbling
+    } else {
+      closeMenu(); // Close the menu if clicked outside
     }
-    }   className='H'> Shopee </h1> </Link>
-        <i onClick={ ()=> 
-          {
-            localStorage.setItem('isdarkmode', !dark)
-            isdark(!dark)
-          }
-        } className={`fa-solid fa-2xl fa-${dark ? 'sun H' : 'moon H'}`}></i>
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuOpen && !event.target.closest('.header-container')) {
+        closeMenu(); // Close the menu if clicked outside of header
+      }
+    };
+
+    window.addEventListener('click', handleClickOutside);
+    return () => {
+      window.removeEventListener('click', handleClickOutside);
+    };
+  }, [menuOpen]);
+
+
+
+
+
+  
+
+
+  // const dark = false
+  return (
+    <header  onClick={handleHeaderClick}  className={`header-container head ${dark ? 'dark' : ''} ${menuOpen ? 'menu-open' : ''}`}>
+      <div className="header-contents">
+        <Link to="/" >  <h1 onClick={() => {
+          //  setquery('')
+          dispatch(fetchProductdata())
+          //  console.log('clicked');
+        }
+        } className='H'> Shopee </h1> </Link>
+        <i onClick={() => {
+          localStorage.setItem('isdarkmode', !dark)
+          isdark(!dark)
+        }
+        } className={`mode fa-solid fa-2xl fa-${dark ? 'sun H' : 'moon H'}  `}></i>
+
         <div className='icon-contain'>
           <Link className="cart-icon" to="/cart">
-            <img className={ `H ${dark ? 'dark' : ''} `} title='Cart' src={CartIcon} alt="cart-icon" />
-          
+            <img className={`c H ${dark ? 'dark' : ''} `} title='Cart' src={CartIcon} alt="cart-icon" />
+
             <div className="cart-items-count">
               {cartItems.reduce(
                 (accumulator, currentItem) => accumulator + currentItem.quantity,
@@ -113,17 +156,22 @@ export default function Header({issign,setissign, dark ,isdark }) {
             </div>
           </Link>
           <Link className="cart-icon" to="/wish">
-            <img  title='WishList' className='heart H' src={wishIcon} alt="wish-icon" />
+            <img title='WishList' className='c heart H' src={wishIcon} alt="wish-icon" />
             <div className="cart-items-count">{wish.reduce((acc, curr) => acc + curr.quantity, 0)}</div>
           </Link>
-          <h3 className='H' onClick={() => {setissign(true)}}>Signup</h3>
-          <ModalSign issign={issign} setissign={setissign} />
-          <h3 className='H' onClick={()=> {setislog(true)}}>Login</h3>
-        <ModalLogin islog={islog} setislog={setislog}/>
-       <Link  to="/about">  <h3 className='H'>About Us</h3> </Link>
-        <Link to="/contact"> <h3 className='H'>Contact Us</h3> </Link>
         </div>
-   
+
+        <div onClick={ (e)=>e.stopPropagation() } className='ham'>
+          <span onClick={toggleMenu} className="close-icon">&times;</span>
+          <h3 className='H' onClick={() => { setissign(true) }}>Signup</h3>
+          <ModalSign issign={issign} setissign={setissign} />
+          <h3 className='H' onClick={() => { setislog(true) }}>Login</h3>
+          <ModalLogin islog={islog} setislog={setislog} />
+          <Link to="/about">  <h3 className='H'>About Us</h3> </Link>
+          <Link to="/contact"> <h3 className='H'>Contact Us</h3> </Link>
+        </div>
+        <Hamburger toggleMenu={toggleMenu} />
+
       </div>
     </header>
   )
