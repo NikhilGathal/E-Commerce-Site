@@ -138,3 +138,19 @@ form {
 
 
 }
+
+@media(max-height : 710px)
+{
+  .about-us-container {
+    padding:0 25px;
+    margin-top: 14px;
+  
+  }
+  .value {
+    gap: 10px;
+  }
+  .about-us-container h1,h2 
+  {
+    margin: 10;
+  }
+}
