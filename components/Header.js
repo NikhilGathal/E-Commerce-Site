@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import wishIcon from '../assets/heart-solid.svg'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import CartIcon from '../assets/cart-icon.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -20,7 +20,15 @@ export default function Header({ issign, setissign, dark, isdark }) {
   // const [issign, setissign] = useState(false)
   const [islog, setislog] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false);
+  const [username, setusername] = useState('')
+  // console.log(username);
 
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      setusername(storedUsername);
+    }
+  }, [])
 
 
   const dispatch = useDispatch()
@@ -99,8 +107,8 @@ export default function Header({ issign, setissign, dark, isdark }) {
 
   const handleHeaderClick = (e) => {
     // If the menu is open and the click is within the header, do not close it
-    console.log('Header');
-   
+    // console.log('Header');
+
     if (menuOpen && !e.target.closest('.header-contents')) {
       e.stopPropagation(); // Prevent event bubbling
     } else {
@@ -125,12 +133,12 @@ export default function Header({ issign, setissign, dark, isdark }) {
 
 
 
-  
+
 
 
   // const dark = false
   return (
-    <header  onClick={handleHeaderClick}  className={`header-container head ${dark ? 'dark' : ''} ${menuOpen ? 'menu-open' : ''}`}>
+    <header onClick={handleHeaderClick} className={`header-container head ${dark ? 'dark' : ''} ${menuOpen ? 'menu-open' : ''}`}>
       <div className="header-contents">
         <Link to="/" >  <h1 onClick={() => {
           //  setquery('')
@@ -142,8 +150,8 @@ export default function Header({ issign, setissign, dark, isdark }) {
           localStorage.setItem('isdarkmode', !dark)
           isdark(!dark)
         }
-        } className={`mode fa-solid fa-2xl fa-${dark ? 'sun H' : 'moon H'}  `}></i>
-
+        } className={`mode fa-solid fa-2xl fa-${dark ? 'sun ' : 'moon '}  `}></i>
+        <h1>   {username ? `Welcome ${username}` : ''}  </h1>
         <div className='icon-contain'>
           <Link className="cart-icon" to="/cart">
             <img className={`c H ${dark ? 'dark' : ''} `} title='Cart' src={CartIcon} alt="cart-icon" />
@@ -161,14 +169,20 @@ export default function Header({ issign, setissign, dark, isdark }) {
           </Link>
         </div>
 
-        <div onClick={ (e)=>e.stopPropagation() } className='ham'>
+        <div onClick={(e) => e.stopPropagation()} className='ham'>
           <span onClick={toggleMenu} className="close-icon">&times;</span>
           <h3 className='H' onClick={() => { setissign(true) }}>Signup</h3>
           <ModalSign issign={issign} setissign={setissign} />
-          <h3 className='H' onClick={() => { setislog(true) }}>Login</h3>
-          <ModalLogin islog={islog} setislog={setislog} />
-          <Link to="/about">  <h3 className='H'>About Us</h3> </Link>
-          <Link to="/contact"> <h3 className='H'>Contact Us</h3> </Link>
+          <h3 className='H' onClick={() => { setislog(true) }} style={{ display: username ? 'none' : 'block' }} >Login</h3>
+          <ModalLogin islog={islog} setislog={setislog} setusername={setusername} />
+          <h3 className='H' onClick={() => {
+            localStorage.removeItem('username')
+            setusername('')
+          }}
+            style={{ display: username ? 'block' : 'none' }}
+          > Logout      </h3>
+          <NavLink className={({ isActive }) => isActive ? 'underline' : ''} to="/about">  <h3 className='H'>About Us</h3> </NavLink>
+          <NavLink className={({ isActive }) => isActive ? 'underline' : ''} to="/contact"> <h3 className='H'>Contact Us</h3> </NavLink>
         </div>
         <Hamburger toggleMenu={toggleMenu} />
 

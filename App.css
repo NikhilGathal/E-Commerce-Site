@@ -269,7 +269,8 @@ button:hover
   transition: all 0.2s ease-in-out;
 }
 .H:hover {
-  transform: scale(1.05);
+  /* transform: scale(1.05); */
+  text-decoration: underline;
 }
 
 .title-container {
@@ -507,6 +508,12 @@ form button {
 }
 
 
+.ham .underline 
+{
+  text-decoration: underline;
+  color: #a870f1;
+}
+
 @media  (max-width: 697px)
 {
   .ham 
@@ -559,6 +566,10 @@ form button {
 .hamburger-menu-container
 {
   margin-left: auto;
+}
+.header-contents 
+{
+  padding-top: 5px;
 }
 }
 
@@ -627,6 +638,50 @@ form button {
     bottom: 13px;
     left: 13px;
    
+  }
+
+}
+
+
+
+@media (max-width :437px)
+{
+  .header-contents h1
+  {
+    font-size: 9px;
+  }
+}
+
+@media(max-width :932px)
+{
+  .header-contents h1 
+  {
+    font-size: 20px;
+  }
+}
+
+@media(max-width :804px)
+{
+  .header-contents h1 
+  {
+    font-size: 18px;
+  }
+  .header-contents .ham h3 
+  {
+    font-size: 15px;
+  }
+
+}
+
+@media(max-width :730px)
+{
+  .header-contents h1 
+  {
+    font-size: 16px;
+  }
+  .header-contents .ham h3 
+  {
+    font-size: 13px;
   }
 
 }

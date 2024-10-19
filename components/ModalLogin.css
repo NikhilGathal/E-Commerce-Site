@@ -26,7 +26,7 @@
     border-radius: 12px;
     flex-grow: 1;
     max-width: 30rem; /* max-w-2xl */
-    padding: 16px; /* p-4 */
+    padding: 21px; /* p-4 */
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
   }
   

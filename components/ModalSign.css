@@ -27,7 +27,7 @@
     flex-grow: 1;
     background-color: white;
     border-radius: 12px; /* rounded-lg */
-    padding: 16px; /* p-4 */
+    padding: 20px; /* p-4 */
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* shadow-lg */
   }
   
@@ -59,6 +59,7 @@
     border: 1px solid #4b5563; /* border-gray-600 */
     padding: 8px; /* px-2 py-1 */
     max-width: 95%;
+    margin-top: 5px;
   }
   
   /* Button container */
