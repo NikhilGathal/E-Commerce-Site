@@ -61,74 +61,39 @@ useEffect(() => {
   return () => clearTimeout(delayDebounceFn); // Cleanup the timeout on query change
 }, [query, dispatch,query1]);
 
-// useEffect(() => {
-//   const modalTimeout = setTimeout(() => {
-//     setissign(true) // Show modal
-//   }, 4000)
 
-//   return () => clearTimeout(modalTimeout) // Cleanup timeout on unmount
-// }, []) // Empty dependency to run only once
+//   // If there's a selected category from SelectMenu (`query1`), fetch products for that category.
+//   if (query1) {
+//     fetch(`https://fakestoreapi.com/products/category/${query1}`)
+//       .then((res) => res.json())
+//       .then((data) => dispatch(updateAllProducts(data)))
+//       .catch(() => {
+//         dispatch(fetchProductsError('Error fetching products for selected category'));
+//       });
+//   } else if (query.length > 2) {
+//     // Only fetch if query is longer than 2 characters for search input.
+//     const delayDebounceFn = setTimeout(() => {
+//       fetch(`https://fakestoreapi.com/products/category/${query}`)
+//         .then((res) => res.json())
+//         .then((data) => {
+//           if (data.length === 0) {
+//             dispatch(fetchProductsError('No products found'));
+//           } else {
+//             dispatch(updateAllProducts(data));
+//             setquery(''); // Clear the input after fetching data.
+//           }
+//         })
+//         .catch(() => {
+//           dispatch(fetchProductsError('Error fetching products'));
+//         });
+//     }, 300); // 300ms debounce
 
-  // useEffect(() => {
-  //   if (query) {
-  //     fetch(`https://fakestoreapi.com/products/category/${query}`)
-  //       .then(res => {
-  //         // Check if the response is OK
-  //         if (!res.ok) {
-  //           throw new Error('Network response was not ok');
-  //         }
-  //         return res.json();
-  //       })
-  //       .then(json => {
-  //         // Check if the returned data is empty
-  //         if (json.length === 0) {
-  //           dispatch(fetchProductsError('Category Not Found'));
-  //           dispatch(updateAllProducts([])); // Clear the products list
-  //         } else {
-  //           dispatch(updateAllProducts(json));
-  //         }
-  //       })
-  //       .catch(error => {
-  //         console.log('Error:', error.message);
-  //         dispatch(fetchProductsError('Category Not Found'));
-  //         dispatch(updateAllProducts([])); // Clear the products list
-  //       });
-  //   } else {
-  //     // Optionally, you could fetch all products or clear the list if the query is empty
-  //     dispatch(fetchProducts());
-  //   }
-  // }, [query, dispatch]);
-
-  // useEffect(() => {
-  //   if (query) {
-  //     fetch(`https://fakestoreapi.com/products/category/${query}`)
-  //       .then(res => {
-  //         if (!res.ok) {
-  //           throw new Error('Network response was not ok');
-  //         }
-  //         return res.json();
-  //       })
-  //       .then(json => {
-  //         if (json.length === 0) {
-  //           console.log('error');
-
-  //           // dispatch(fetchProductsError({payload : 'Category Not Found'})); // Set error for no products
-  //           dispatch(fetchProductsError())
-  //           dispatch(updateAllProducts([])); // Clear the products list
-  //         } else {
-  //           dispatch(updateAllProducts(json)); // Update the products list
-  //         }
-  //       })
-  //       .catch(error => {
-  //         console.error('Error:', error.message);
-  //         dispatch(fetchProductsError()) // Set error on fetch failure
-  //         dispatch(updateAllProducts([])); // Clear the products list
-  //       });
-  //   } else {
-  //     // Optionally, you could fetch all products or clear the list if the query is empty
-  //     dispatch(fetchProductdata());
-  //   }
-  // }, [query, dispatch]);
+//     return () => clearTimeout(delayDebounceFn); // Cleanup the timeout on query change.
+//   } else {
+//     // If the query is cleared, fetch all products.
+//     dispatch(fetchProductdata());
+//   }
+// }, [query, query1, dispatch]);
 
 
 

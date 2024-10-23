@@ -10,57 +10,50 @@ export default function SearchBar({ setquery }) {
   const [query1, setQuery1] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const data = ['jewelery', "men's clothing", 'electronics', "women's clothing"]
-  // const handleChange = (e) => {
-  //   let filteredSuggestions
+  
+
   //   const value = e.target.value;
   //   setQuery1(value);
-  //   let element = document.querySelector('.list-contain')
-  //   element.classList.add('visible')
-  //   // if(e.target.value === '' )
-  //   // {
 
-  //   // }
+  //   let element = document.querySelector('.list-contain');
+
   //   // Filter data based on user input
   //   if (value.length > 0) {
-  //      filteredSuggestions = data.filter(item =>
-  //       item.toLowerCase().includes(value.toLowerCase()));
+  //     const filteredSuggestions = data.filter(item =>
+  //       item.toLowerCase().includes(value.toLowerCase())
+  //     );
+  //     setSuggestions(filteredSuggestions);
   //     console.log(filteredSuggestions);
 
-  //     if (filteredSuggestions.length > 0 ) {
+  //     // Add or remove the 'visible' class based on suggestions
+  //     if (filteredSuggestions.length > 0) {
   //       element.classList.add('visible');
-  //     } 
-  //     else if (filteredSuggestions.length === 4) {
+  //     } else {
   //       element.classList.remove('visible');
   //     }
-  //     else {
-  //       element.classList.remove('visible');
-  //     }
-  //     setSuggestions(filteredSuggestions);
-  //     element.classList.remove('visible');
-  //   }    
-  //   else {
+  //   } else {
+  //     // Clear suggestions and remove the 'visible' class when the input is cleared
   //     setSuggestions([]);
+  //     element.classList.remove('visible');
   //   }
 
-  //   setquery(e.target.value.toLowerCase())
+  //   setquery(value.toLowerCase());
   // };
-
 
 
   const handleChange = (e) => {
     const value = e.target.value;
     setQuery1(value);
-
+  
     let element = document.querySelector('.list-contain');
-
+  
     // Filter data based on user input
     if (value.length > 0) {
       const filteredSuggestions = data.filter(item =>
         item.toLowerCase().includes(value.toLowerCase())
       );
       setSuggestions(filteredSuggestions);
-      console.log(filteredSuggestions);
-
+  
       // Add or remove the 'visible' class based on suggestions
       if (filteredSuggestions.length > 0) {
         element.classList.add('visible');
@@ -72,9 +65,27 @@ export default function SearchBar({ setquery }) {
       setSuggestions([]);
       element.classList.remove('visible');
     }
-
-    setquery(value.toLowerCase());
+  
+    // If the input is cleared, fetch the full product list.
+    // if (value.trim() === '') {
+    //   setquery(''); // Update the parent component to trigger the fetch for the full product list.
+    // } else {
+    //   setquery(value.toLowerCase());
+    // }
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
   const handleSuggestionClick = (suggestion) => {
 
     setquery(suggestion)
