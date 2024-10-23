@@ -78,14 +78,14 @@ export default function SearchBar({ setquery }) {
 
 
 
-
-
-
-
-
-
-
-
+  const handlesearch = () => {
+    console.log('hi');
+    
+    // Trigger search with the current query1 value
+    if (query1.trim() !== '') {
+      setquery(query1.toLowerCase());
+    }
+  };
   const handleSuggestionClick = (suggestion) => {
 
     setquery(suggestion)
@@ -114,11 +114,13 @@ export default function SearchBar({ setquery }) {
   }, []);
 
 
+
+
   return (
 
     <>
       <div className="search-container">
-        <i className="fa-solid fa-magnifying-glass"></i>
+      <i onClick={handlesearch} className="fa-solid fa-magnifying-glass"></i>
         <input onChange={handleChange} ref={inputRef}
           type="text" value={query1} placeholder="Search for a Category..." />
 

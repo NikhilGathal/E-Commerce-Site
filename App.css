@@ -140,7 +140,7 @@ button:hover
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
   height: calc(
-    100vh - 79.44px
+    100vh - 386.44px
   ); /* Full viewport height to ensure vertical centering */
 }
 
@@ -153,7 +153,7 @@ button:hover
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
   height: calc(
-    100vh - 265.44px
+    100vh - 543.44px
   ); /* Full viewport height to ensure vertical centering */
 }
 

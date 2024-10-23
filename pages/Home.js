@@ -21,7 +21,7 @@ export default function Home() {
   const [query, setquery] = useState('')
   const [query1, setquery1] = useState('')
   const productsList = useSelector(getAllProducts)
-  console.log(productsList);
+  // console.log(productsList);
   
   const [setissign,dark,isdark,issign] = useOutletContext()
   // console.log(issign);
@@ -105,7 +105,7 @@ useEffect(() => {
 
     // If the modal hasn't been shown, set a timeout to show it after 4 seconds
     if (!hasShownModal) {
-      console.log('Timer');
+      // console.log('Timer');
       const timer = setTimeout(() => {
         setShowModal(true);
         !showModal && setissign(true) // Show modal after 4 seconds
@@ -116,19 +116,6 @@ useEffect(() => {
       return () => clearTimeout(timer);
     }
   }, []);
-
-
-
-
-  
-
-
-
-
-
-
-
-
 
 
 

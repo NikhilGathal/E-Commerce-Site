@@ -5,7 +5,7 @@ import './ItemDetail.css';
 import { useDispatch } from 'react-redux'
 import { addCartItem } from '../store/slices/cartSlice';
 import { addWishItem } from '../store/slices/wishListSlice';
-
+import Footer from '../components/Footer'
 const ItemDetail = () => {
     const dispatch = useDispatch()
     let { productId } = useParams();   // Get the itemId from the URL
@@ -20,7 +20,7 @@ const ItemDetail = () => {
     useEffect(() => {
         const fetchItem = async () => {
             try {
-                const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
+                const response = await fetch(`https://fakestoreapi.com/productss/${productId}`);
                 // Check if the response is ok (status 200-299)
                 if (!response.ok) {
                     throw new Error(`Failed to fetch item. Status: `);
@@ -40,9 +40,10 @@ const ItemDetail = () => {
         fetchItem();
     }, [productId]);
 
-    if (loading) return <div className='error-msg'>Loading...</div>;
-    if (error) return <div className='error-msg' > Error : Product Not Found</div>;
+    if (loading) return <> <div className='error-msg'>Loading...</div>  <Footer dark={dark} />  </>;
+    if (error) return <> <div className='error-msg' > Error : Product Not Found</div>   <Footer dark={dark} /> </>;
     return (
+        <>
         <div className={`item-detail-container ${ dark ? 'dark' : ''}`}>
             <div className="item-image">
                 <img src={item.image} alt={item.title} />
@@ -93,6 +94,9 @@ const ItemDetail = () => {
                </div>
             </div>
         </div>
+        <Footer dark={dark}/>
+        </>
+         
     );
 };
 
