@@ -20,7 +20,7 @@ const ItemDetail = () => {
     useEffect(() => {
         const fetchItem = async () => {
             try {
-                const response = await fetch(`https://fakestoreapi.com/productss/${productId}`);
+                const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
                 // Check if the response is ok (status 200-299)
                 if (!response.ok) {
                     throw new Error(`Failed to fetch item. Status: `);
