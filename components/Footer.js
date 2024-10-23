@@ -45,7 +45,7 @@ const Footer = ({dark}) => {
           </ul>
         </div>
 
-        <div className="footer-column">
+        <div className="footer-column help">
           <h4>Help</h4>
           <ul>
             <li><a href="/help">Help Center</a></li>

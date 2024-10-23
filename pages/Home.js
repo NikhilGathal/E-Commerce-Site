@@ -20,7 +20,9 @@ import Footer from '../components/Footer'
 export default function Home() {
   const [query, setquery] = useState('')
   const [query1, setquery1] = useState('')
-
+  const productsList = useSelector(getAllProducts)
+  console.log(productsList);
+  
   const [setissign,dark,isdark,issign] = useOutletContext()
   // console.log(issign);
 
@@ -41,7 +43,7 @@ useEffect(() => {
       fetch(`https://fakestoreapi.com/products/category/${query}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           if (data.length === 0) {
             dispatch(fetchProductsError('No products found')); // Dispatch error if no products found
           } else {
@@ -54,7 +56,7 @@ useEffect(() => {
           dispatch(fetchProductsError('Error fetching products')); // Dispatch error if fetch fails
         });
     }
-  }, 1000); // 300ms debounce
+  }, 300); // 300ms debounce
 
   return () => clearTimeout(delayDebounceFn); // Cleanup the timeout on query change
 }, [query, dispatch,query1]);
@@ -165,7 +167,7 @@ useEffect(() => {
 
 
 
-  const productsList = useSelector(getAllProducts)
+
   const isLoading = useSelector(getProductLoadingState)
   // const isLoading = 1
   const error = useSelector(getProductError)

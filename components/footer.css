@@ -91,6 +91,21 @@
   
   @media (max-width: 768px) {
     .footer {
+      font-size: 13px;
+    }
+
+    .download-btn {
+      padding: 7px 7px;
+      font-size: 13px;
+    }
+  
+    .footer-logo {
+      height: 60px; /* Adjust as per your logo size */
+    }
+  }
+
+  @media (max-width: 565px) {
+    .footer {
       flex-direction: column;
     }
   
@@ -100,12 +115,25 @@
     }
   
     .footer-right {
-      margin-top: 20px;
+      margin-top: 5px;
+      margin-bottom: -15px;
       flex-direction: column;
     }
-  
-    .footer-column {
-      margin-bottom: 20px;
+    .footer-column {     
+      margin-bottom: -15px;
     }
-  }
+
+    .footer {
+      font-size: 13px;
+    }
+
+    .download-btn {
+      padding: 7px 7px;
+      font-size: 13px;
+    }
+  
+    .footer-logo {
+      height: 80px; /* Adjust as per your logo size */
+    }
+  } 
   
