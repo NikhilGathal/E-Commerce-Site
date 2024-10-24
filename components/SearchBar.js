@@ -6,7 +6,7 @@ export default function SearchBar({ setquery }) {
 
   const listContainRef = useRef(null);
   const inputRef = useRef(null);
-
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [query1, setQuery1] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const data = ['jewelery', "men's clothing", 'electronics', "women's clothing"]
@@ -66,17 +66,7 @@ export default function SearchBar({ setquery }) {
       element.classList.remove('visible');
     }
   
-    // If the input is cleared, fetch the full product list.
-    // if (value.trim() === '') {
-    //   setquery(''); // Update the parent component to trigger the fetch for the full product list.
-    // } else {
-    //   setquery(value.toLowerCase());
-    // }
   };
-
-
-
-
 
   const handlesearch = () => {
     console.log('hi');
@@ -86,60 +76,78 @@ export default function SearchBar({ setquery }) {
       setquery(query1.toLowerCase());
     }
   };
-  const handleSuggestionClick = (suggestion) => {
 
-    setquery(suggestion)
-    element.classList.remove('visible')
-    setQuery1(suggestion);
-    setSuggestions([]);
+  
+  const handleKeyDown = (e) => {
+    console.log('Before update:', highlightedIndex);
+    console.log('sugge-len',suggestions.length);
+    
+    if (e.key === 'ArrowDown') {
+      setHighlightedIndex((prevIndex) => {
+        const newIndex = prevIndex < suggestions.length - 1 ? prevIndex + 1 : 0;
+        console.log('New index:', newIndex);
+        return newIndex;
+      });
+    } else if (e.key === 'ArrowUp') {
+      setHighlightedIndex((prevIndex) => {
+        const newIndex = prevIndex > 0 ? prevIndex - 1 : suggestions.length - 1;
+        console.log('New index:', newIndex);
+        return newIndex;
+      });
+    } else if (e.key === 'Enter' && highlightedIndex >= 0) {
+      console.log('Enter pressed, selected suggestion:', suggestions[highlightedIndex]);
+      handleSuggestionClick(suggestions[highlightedIndex]);
+    }
   };
+
+
+  const handleSuggestionClick = (suggestion) => {
+    setQuery1(suggestion);
+    setquery(suggestion);
+    setSuggestions([]);
+    setHighlightedIndex(-1);
+  };
+
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        listContainRef.current &&
-        !listContainRef.current.contains(event.target) &&
-        inputRef.current &&
-        !inputRef.current.contains(event.target)
-      ) {
-        listContainRef.current.classList.remove('visible');
+    const inputElement = inputRef.current;
+
+    if (inputElement) {
+      inputElement.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      if (inputElement) {
+        inputElement.removeEventListener('keydown', handleKeyDown);
       }
     };
-
-    document.addEventListener('click', handleClickOutside);
-
-    // Cleanup the event listener when the component is unmounted
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
-
-
-
+  }, [suggestions, highlightedIndex]);
 
   return (
+    <div className="search-container">
+       <i onClick={handlesearch} className="fa-solid fa-magnifying-glass"></i>
+      <input
+        onChange={handleChange}
+        ref={inputRef}
+        type="text"
+        value={query1}
+        placeholder="Search for a Category..."
+      />
 
-    <>
-      <div className="search-container">
-      <i onClick={handlesearch} className="fa-solid fa-magnifying-glass"></i>
-        <input onChange={handleChange} ref={inputRef}
-          type="text" value={query1} placeholder="Search for a Category..." />
-
-        <div className='list-contain'  ref={listContainRef}>
-          <ul >
-            {suggestions.map((suggestion, index) => (
-              <li className='list-item' key={index} onClick={() => handleSuggestionClick(suggestion)}>
-                {suggestion}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-
+      {/* Always render the suggestions container */}
+      <div className={`list-contain ${suggestions.length > 0 ? 'visible' : ''}`} ref={listContainRef}>
+        <ul>
+          {suggestions.map((suggestion, index) => (
+            <li
+              key={index}
+              className={`list-item ${index === highlightedIndex ? 'highlighted' : ''}`}
+              onClick={() => handleSuggestionClick(suggestion)}
+            >
+              {suggestion}
+            </li>
+          ))}
+        </ul>
       </div>
-
-
-
-    </>
-  )
+    </div>
+  );
 }
 
