@@ -58,38 +58,46 @@ const ItemDetail = () => {
                 </div>
                <div className='item-button'>
                <button  
-               onClick={() => {
-                // Retrieve existing cart items or initialize an empty array
-                let storedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
-                // Check if the product already exists in the cart
-                const existingProductIndex = storedCart.findIndex(item => item.productId === productId);
-                if (existingProductIndex !== -1) {
-                  // If it exists, increment the quantity
-                  storedCart[existingProductIndex].quantity += 1;
-                } else {
-                  // If it doesn't exist, add a new object with productId and quantity
-                  storedCart.push({ productId, quantity: 1 });
-                }
-                // Save the updated cart back to localStorage
-                localStorage.setItem('cartItems', JSON.stringify(storedCart));
-                // Dispatch the action to add to cart in Redux
-                dispatch(addCartItem({ productId }));
-              }}
+                     onClick={() => {
+                      const username = localStorage.getItem('username');
+                      const cartKey = username ? `${username}cart` : 'cartItems';
+                      let storedCart = JSON.parse(localStorage.getItem(cartKey)) || [];
+                    
+                      // Check if the product already exists in the cart
+                      const existingProductIndex = storedCart.findIndex(item => item.productId === productId);
+                      if (existingProductIndex !== -1) {
+                        // If it exists, increment the quantity
+                        storedCart[existingProductIndex].quantity += 1;
+                      } else {
+                        // If it doesn't exist, add a new object with productId and quantity
+                        storedCart.push({ productId, quantity: 1 });
+                      }
+                      // Save the updated cart back to localStorage
+                      localStorage.setItem(cartKey, JSON.stringify(storedCart));
+                      // Dispatch the action to add to cart in Redux
+                      dispatch(addCartItem({ productId }));
+                    }}
+                    
                >Add to cart</button>
                <button  
                onClick={() => {
-              
-                
-                let storedWish = JSON.parse(localStorage.getItem('wishItems')) || [];
+                const username = localStorage.getItem('username');
+                const wishKey = username ? `${username}wish` : 'wishItems';
+                let storedWish = JSON.parse(localStorage.getItem(wishKey)) || [];
                 const existingProductIndex = storedWish.findIndex(item => item.productId === productId);
                 if (existingProductIndex !== -1) {
                   console.log("Product already in wishlist.");
                 } else {
-                  storedWish.push({ productId , quantity: 1 });
+                  storedWish.push({ productId, quantity: 1 });
                 }
-                localStorage.setItem('wishItems', JSON.stringify(storedWish));
-                dispatch(addWishItem({ productId  }))
+              
+                // Save the updated wishlist back to localStorage
+                localStorage.setItem(wishKey, JSON.stringify(storedWish));
+                
+                // Dispatch the action to add to wishlist in Redux
+                dispatch(addWishItem({ productId }));
               }}
+              
                >Add to wishlist</button>
                </div>
             </div>

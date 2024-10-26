@@ -7,6 +7,7 @@ import './App.css'
 export default function App() {
   const [issign, setissign] = useState(false)
   // const [dark ,isdark] = useState(false)
+  const[userlogin,setuserlogin] = useState(true)
   const [dark, isdark] = useState(JSON.parse(localStorage.getItem('isdarkmode')))
   useEffect(() => {
     if (dark) {
@@ -25,8 +26,8 @@ export default function App() {
     <>
      
       <div className={`app-container ${dark ? 'dark' : ''}`}>
-      <Header issign={issign} setissign={setissign} dark={dark} isdark={isdark} />
-      <Outlet  context={[setissign,dark, isdark,issign] }/>
+      <Header issign={issign} setissign={setissign} dark={dark} isdark={isdark}  setuserlogin={setuserlogin}/>
+      <Outlet  context={[setissign,dark, isdark,issign,userlogin] }/>
     </div>
      
     </>

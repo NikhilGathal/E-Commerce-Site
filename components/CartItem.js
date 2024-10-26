@@ -25,50 +25,112 @@ export default function CartItem({
         </div>
       </div>
 
-       <div className="">${price}</div>
+      <div className="">${price}</div>
       <div className="item-quantity">
-        <button onClick={() =>{
-           dispatch(decreaseCartItemQuantity({productId}))
-           let storedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
-           // Check if the product already exists in the cart
-           const existingProductIndex = storedCart.findIndex(item => item.productId === productId);
-           if (existingProductIndex !== -1) {
-             // If it exists, increment the quantity
-             storedCart[existingProductIndex].quantity -= 1;
-           } else {
-             // If it doesn't exist, add a new object with productId and quantity
-             storedCart.push({ productId, quantity: 1 });
-           }
-           // Save the updated cart back to localStorage
-           localStorage.setItem('cartItems', JSON.stringify(storedCart));
-           console.log(storedCart);
-           // Dispatch the action to add to cart in Redux
-        }}>-</button>
+        <button
+
+
+          // onClick={() => {
+          //   username = localStorage.getItem('username')
+          //   console.log(username);
+          // if (username) {
+          //   let storedCart = JSON.parse(localStorage.getItem(`${username}logincart`)) || [];
+          //   // Check if the product already exists in the cart
+          //   const existingProductIndex = storedCart.findIndex(item => item.productId === productId);
+          //   if (existingProductIndex !== -1) {
+          //     // If it exists, increment the quantity
+          //     storedCart[existingProductIndex].quantity -= 1;
+          //   } else {
+          //     // If it doesn't exist, add a new object with productId and quantity
+          //     storedCart.push({ productId, quantity: 1 });
+          //   }
+          //   // Save the updated cart back to localStorage
+          //   localStorage.setItem(`${username}logincart`, JSON.stringify(storedCart));
+          //   console.log(storedCart);
+          //   // Dispatch the action to add to cart in Redux
+          //   dispatch(decreaseCartItemQuantity({ productId }))
+          // }
+          // else {
+
+          //   let storedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
+          //   // Check if the product already exists in the cart
+          //   const existingProductIndex = storedCart.findIndex(item => item.productId === productId);
+          //   if (existingProductIndex !== -1) {
+          //     // If it exists, increment the quantity
+          //     storedCart[existingProductIndex].quantity -= 1;
+          //   } else {
+          //     // If it doesn't exist, add a new object with productId and quantity
+          //     storedCart.push({ productId, quantity: 1 });
+          //   }
+          //   // Save the updated cart back to localStorage
+          //   localStorage.setItem('cartItems', JSON.stringify(storedCart));
+          //   console.log(storedCart);
+          //   // Dispatch the action to add to cart in Redux
+          //   dispatch(decreaseCartItemQuantity({ productId }))
+          // }}}
+
+
+          onClick={() => {
+            const username = localStorage.getItem('username');
+            const cartKey = username ? `${username}cart` : 'cartItems';
+            let storedCart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            const existingProductIndex = storedCart.findIndex(item => item.productId === productId);
+            if (existingProductIndex !== -1) {
+              // Decrease quantity
+              storedCart[existingProductIndex].quantity -= 1;
+              if (storedCart[existingProductIndex].quantity === 0) {
+                // Remove item from localStorage if quantity is zero
+                storedCart.splice(existingProductIndex, 1);
+              }
+              // Save the updated cart back to localStorage
+              localStorage.setItem(username ? `${username}logincart` : 'cartItems', JSON.stringify(storedCart));
+            }
+            // Dispatch the action to decrease the quantity in Redux
+            dispatch(decreaseCartItemQuantity({ productId }));
+          }}
+        >-</button>
         <span>{quantity}</span>
         <button onClick={() => {
-          dispatch(increaseCartItemQuantity({productId}))
-
-          let storedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
-          // Check if the product already exists in the cart
+          const username = localStorage.getItem('username');
+          const cartKey = username ? `${username}cart` : 'cartItems';
+          let storedCart = JSON.parse(localStorage.getItem(cartKey)) || [];
           const existingProductIndex = storedCart.findIndex(item => item.productId === productId);
           if (existingProductIndex !== -1) {
-            // If it exists, increment the quantity
+            // Increase quantity
             storedCart[existingProductIndex].quantity += 1;
           } else {
             // If it doesn't exist, add a new object with productId and quantity
             storedCart.push({ productId, quantity: 1 });
           }
           // Save the updated cart back to localStorage
-          localStorage.setItem('cartItems', JSON.stringify(storedCart));
-          console.log(storedCart);
-          // Dispatch the action to add to cart in Redux
+          localStorage.setItem(username ? `${username}logincart` : 'cartItems', JSON.stringify(storedCart));
+          // Dispatch the action to increase the quantity in Redux
+          dispatch(increaseCartItemQuantity({ productId }));
+        }}
 
-
-        }}>+</button>
+        >+</button>
       </div>
       <div className="item-total">${quantity * price}</div>
-     <div>  <button className='remove'  onClick={  ()=> dispatch(removeCartItem(productId)) }>Remove</button> </div>
-      
+      <div>  <button className='remove'
+
+        onClick={() => {
+          const username = localStorage.getItem('username');
+                      const cartKey = username ? `${username}cart` : 'cartItems';
+                      let storedCart = JSON.parse(localStorage.getItem(cartKey)) || [];
+          // Find the index of the product to be removed
+          const existingProductIndex = storedCart.findIndex(item => item.productId === productId);
+          console.log(productId);
+          if (existingProductIndex !== -1) {
+            // Remove item from local storage
+            storedCart.splice(existingProductIndex, 1);
+            // Save the updated cart back to localStorage
+            localStorage.setItem(username ? `${username}cart` : 'cartItems', JSON.stringify(storedCart));
+          }
+          // Dispatch the action to remove the item from Redux
+          dispatch(removeCartItem(productId));
+        }}
+      >Remove</button> </div>
+
     </div>
   )
 }

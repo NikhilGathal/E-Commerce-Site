@@ -50,6 +50,10 @@ const slice = createSlice({
       const existingItemIndex = findItemIndex(state.list, action)
       state.list.splice(existingItemIndex, 1)
     },
+    removeallWishItem(state)
+    {
+      state.list = []
+    },
     loadWishItem(state,action)
     {
       if(action.payload.length)
@@ -73,6 +77,8 @@ const slice = createSlice({
 const getWishItems = ({ products, wishList }) => {
   return wishList.list
     .map(({ productId, quantity }) => {
+      
+      
       const wishProduct = products.list.find(
         (product) => product.id === productId
       )
@@ -106,7 +112,9 @@ export const getAllWishItems = createSelector(getWishItems, (wishItems) => wishI
 export const {
   loadWishItem,
   addWishItem,
-  removeWishItem
+  removeWishItem,
+  removeallWishItem
+
   
 } = slice.actions
 

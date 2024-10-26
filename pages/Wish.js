@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import Wishitem from '../components/Wishitem'
-import { useSelector } from 'react-redux'
-import { getAllWishItems } from '../store/slices/wishListSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllWishItems, loadWishItem } from '../store/slices/wishListSlice'
 export default function Wish() {
 
   const wishItems = useSelector(getAllWishItems)
   // console.log(wishItems);
   //   console.log( cartItems.map( (curr)=> curr.quantity * curr.price )    );
+  
   let storedWish = JSON.parse(localStorage.getItem('wishItems')) || []
   const [isLoading, setIsLoading] = useState(true);
+
+  const dispatch = useDispatch()
+
 
   useEffect(() => {
     // Simulate data fetching (if you're getting cart items from an API/localStorage, etc.)
@@ -40,10 +44,10 @@ export default function Wish() {
             <div className="quantity">Remove</div>
             <div className="total"></div>
           </div>
-          {wishItems.map(({ productId, title, rating, price, image, quantity }) => (
+          {wishItems.map(({ id, title, rating, price, image, quantity }) => (
             <Wishitem
+              productId={id}
               key={title}
-              productId={productId}
               title={title}
               price={price}
               quantity={quantity}
@@ -58,15 +62,7 @@ export default function Wish() {
           </div>
         </div>
         </div>
-      </main> ) : <div> <h1 className='empty-wish'> Wishlist is empty </h1> </div>})
-    
-
-
-
-
-
-      
-    
+      </main> ) : <div> <h1 className='empty-wish'> Wishlist is empty </h1> </div>}
     </>
   )
 }

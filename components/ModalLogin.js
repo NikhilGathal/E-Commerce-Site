@@ -2,12 +2,17 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import './ModalLogin.css';
+import { removeallCartItem } from '../store/slices/cartSlice';
+import { useDispatch } from 'react-redux';
+import { removeallWishItem } from '../store/slices/wishListSlice';
 
-export default function ModalLogin({ islog, setislog  ,setusername}) {
+export default function ModalLogin({ islog, setislog  ,setusername ,setuserlogin}) {
     const [loginData, setLoginData] = useState({
         username: '',
         password: ''
     });
+
+    const dispatch = useDispatch()
 
     // Handle input changes
     const handleChange = (e) => {
@@ -20,17 +25,22 @@ export default function ModalLogin({ islog, setislog  ,setusername}) {
 
     // Handle Log In (Validate with localStorage)
     const handleLogin = () => {
-        const storedUser = JSON.parse(localStorage.getItem('user'));
+        const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
     
-        // Check if stored user exists and credentials match
-        if (
-            storedUser &&
-            storedUser.username === loginData.username &&
-            storedUser.password === loginData.password
-        ) {
+        // Find the user with the matching username and password
+        const user = existingUsers.find(
+            user => 
+                user.username === loginData.username && 
+                user.password === loginData.password
+        );
+    
+        if (user) {
             alert('Successfully logged in!');
-            setusername(storedUser.username);
-            localStorage.setItem('username', storedUser.username); // Store username in localStorage
+            setusername(user.username);
+            localStorage.setItem('username', user.username); // Store the username in localStorage
+            dispatch(removeallCartItem());
+            dispatch(removeallWishItem());
+            setuserlogin(true);
             setislog(false);
         } else {
             alert('Login failed. Username or password is incorrect.');
@@ -41,6 +51,11 @@ export default function ModalLogin({ islog, setislog  ,setusername}) {
             password: ''
         });
     };
+    
+
+
+
+
     return createPortal(
         <div onClick={() => setislog(false)} className={`modal-overlay-log ${islog ? '' : 'hidden'}`}>
             <div onClick={(e) => e.stopPropagation()} className="modal-box-log">

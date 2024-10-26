@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import './ModalSign.css';
 
-export default function ModalSign({ issign, setissign }) {
+export default function ModalSign({ issign, setissign, setsignname }) {
     const [userData, setUserData] = useState({
         username: '',
         password: '',
@@ -24,11 +24,53 @@ export default function ModalSign({ issign, setissign }) {
 
     // Handle Sign In (Save to localStorage)
     const handleSignIn = () => {
-        // Save user data to localStorage
-        localStorage.setItem('user', JSON.stringify(userData));
+        const errorMessages = [];
+    
+        // Validate fields and add error messages to the array
+        if (!userData.username.trim()) errorMessages.push('Username is required.');
+        if (!userData.password.trim()) errorMessages.push('Password is required.');
+        if (!userData.phone.trim()) errorMessages.push('Phone number is required.');
+        if (!userData.email.trim()) errorMessages.push('Email is required.');
+        if (!userData.address.trim()) errorMessages.push('Address is required.');
+    
+        // If there are any error messages, show them in an alert box
+        if (errorMessages.length > 0) {
+            alert(errorMessages.join('\n'));
+            return; // Stop further execution if there are errors
+        }
+    
+        // Get existing users from localStorage or initialize an empty array
+        const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+    
+        // Check if the username already exists
+        const userExists = existingUsers.some(user => user.username === userData.username);
+    
+        if (userExists) {
+            alert('Username already exists. Please choose a different username.');
+            return;
+        }
+    
+        // Add the new user to the array
+        existingUsers.push(userData);
+    
+        // Save the updated user array to localStorage
+        localStorage.setItem('users', JSON.stringify(existingUsers));
+        localStorage.setItem('signedUp', 'true');
         alert('Sign Up successful! Please proceed to login.');
+        setsignname(true);
         setissign(false);
+    
+        // Reset form data
+        setUserData({
+            username: '',
+            password: '',
+            phone: '',
+            email: '',
+            address: ''
+        });
     };
+    
+    
 
     return createPortal(
         <div onClick={() => setissign(false)} className={`modal-overlay ${issign ? '' : 'hidden'}`}>
@@ -43,6 +85,7 @@ export default function ModalSign({ issign, setissign }) {
                         value={userData.username}
                         onChange={handleChange}
                     />
+
                     <input
                         placeholder="Password"
                         className="modal-input"
@@ -51,6 +94,7 @@ export default function ModalSign({ issign, setissign }) {
                         value={userData.password}
                         onChange={handleChange}
                     />
+
                     <input
                         placeholder="Phone no"
                         className="modal-input"
@@ -59,6 +103,7 @@ export default function ModalSign({ issign, setissign }) {
                         value={userData.phone}
                         onChange={handleChange}
                     />
+
                     <input
                         placeholder="Email"
                         className="modal-input"
@@ -67,6 +112,7 @@ export default function ModalSign({ issign, setissign }) {
                         value={userData.email}
                         onChange={handleChange}
                     />
+
                     <textarea
                         placeholder="Address"
                         className="modal-input"

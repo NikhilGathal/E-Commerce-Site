@@ -16,22 +16,46 @@ import ModalLogin from './ModalLogin'
 import { addWishItem, loadWishItem } from '../store/slices/wishListSlice'
 import Hamburger from './Hamburger'
 
-export default function Header({ issign, setissign, dark, isdark }) {
+export default function Header({ issign, setissign, dark, isdark, setuserlogin }) {
+  // console.log(issign);
+  // console.log(issign);
+
   // const [issign, setissign] = useState(false)
+  const [signname, setsignname] = useState(false)
   const [islog, setislog] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false);
-  const [username, setusername] = useState('')
+  
+  const dispatch = useDispatch()
+  // const [username, setusername] = useState('')
+  const [username, setusername] = useState(() => {
+    return localStorage.getItem('username') || '';
+  });
   // console.log(username);
+
+
+  useEffect(() => {
+    if (username) {
+      // Fetch and load the user's cart and wishlist from localStorage when username changes (i.e., user logs in)
+      const storedCart = JSON.parse(localStorage.getItem(`${username}cart`)) || [];
+      dispatch(loadCartItemsFromLocal(storedCart));
+  
+      const storedWish = JSON.parse(localStorage.getItem(`${username}wish`)) || [];
+      dispatch(loadWishItem(storedWish));
+    }
+  }, [username, dispatch]);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
     if (storedUsername) {
       setusername(storedUsername);
     }
+    const signedUp = localStorage.getItem('signedUp');
+    if (signedUp === 'true') {
+        setsignname(true);
+    }
   }, [])
 
 
-  const dispatch = useDispatch()
   useEffect(() => {
 
     // dispatch(
@@ -58,14 +82,23 @@ export default function Header({ issign, setissign, dark, isdark }) {
 
     // dispatch( fetchCartItemsdata())
 
-    let storedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
-    // console.log(storedCart);
-    dispatch(loadCartItemsFromLocal(storedCart))
 
-    let storedWish = JSON.parse(localStorage.getItem('wishItems')) || []
-    // console.log(storedWish);
 
-    dispatch(loadWishItem(storedWish))
+    
+
+
+let userlogin = localStorage.getItem('username');
+let cartKey = userlogin ? `${userlogin}cart` : 'cartItems';
+let wishKey = userlogin ? `${userlogin}wish` : 'wishItems';
+
+let storedCart = JSON.parse(localStorage.getItem(cartKey)) || [];
+dispatch(loadCartItemsFromLocal(storedCart));
+
+let storedWish = JSON.parse(localStorage.getItem(wishKey)) || [];
+dispatch(loadWishItem(storedWish));
+
+
+
 
 
     // dispatch(fetchProducts())
@@ -97,7 +130,9 @@ export default function Header({ issign, setissign, dark, isdark }) {
 
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Stop the click event from propagating
+    
+  e.stopPropagation(); // Stop the click event from propagating
+   
     setMenuOpen((prevState) => !prevState); // Toggle the menu open state
   };
 
@@ -171,18 +206,34 @@ export default function Header({ issign, setissign, dark, isdark }) {
 
         <div onClick={(e) => e.stopPropagation()} className='ham'>
           <span onClick={toggleMenu} className="close-icon">&times;</span>
-          <h3 className='H' onClick={() => { setissign(true) }}>Signup</h3>
-          <ModalSign issign={issign} setissign={setissign} />
-          <h3 className='H' onClick={() => { setislog(true) }} style={{ display: username ? 'none' : 'block' }} >Login</h3>
-          <ModalLogin islog={islog} setislog={setislog} setusername={setusername} />
+          <h3 className='H' onClick={(e) => {
+            setissign(true);
+            
+            toggleMenu(e);
+          }} style={{ display: signname || username ? 'none' : 'block' }} >Signup</h3>
+          <ModalSign issign={issign} setissign={setissign} setsignname={setsignname} />
+          <h3 className='H' onClick={(e) => { setislog(true) 
+             toggleMenu(e);
+      
+            
+             console.log('hi');
+             
+          }} style={{ display: username ? 'none' : 'block' }} >Login</h3>
+          <ModalLogin islog={islog} setislog={setislog} setusername={setusername} setuserlogin={setuserlogin} />
           <h3 className='H' onClick={() => {
             localStorage.removeItem('username')
+            const storedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const storedwish = JSON.parse(localStorage.getItem('wishItems')) || [];
+            dispatch(loadCartItemsFromLocal(storedCart));
+            dispatch(  loadWishItem(storedwish))
+            setuserlogin(false)
             setusername('')
+            setsignname(false);
           }}
             style={{ display: username ? 'block' : 'none' }}
           > Logout      </h3>
-          <NavLink className={({ isActive }) => isActive ? 'underline' : ''} to="/about">  <h3 className='H'>About Us</h3> </NavLink>
-          <NavLink className={({ isActive }) => isActive ? 'underline' : ''} to="/contact"> <h3 className='H'>Contact Us</h3> </NavLink>
+          <NavLink className={({ isActive }) => isActive ? 'underline' : ''} to="/about">  <h3  className='H'>About Us</h3> </NavLink>
+          <NavLink className={({ isActive }) => isActive ? 'underline' : ''} to="/contact"> <h3  className='H'>Contact Us</h3> </NavLink>
         </div>
         <Hamburger toggleMenu={toggleMenu} />
 

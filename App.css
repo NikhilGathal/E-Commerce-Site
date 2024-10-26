@@ -594,7 +594,7 @@ ul li:last-child {
   gap: 0px;
   flex-direction: column;
   right: -160px;
-  top: 8px;
+  top: 5px;
   padding: 18px;
    /* display: none;  */
   transition: right 0.4s ease-in-out; 
@@ -603,7 +603,10 @@ ul li:last-child {
   z-index: 1;
   font-size: 12px;
 }
-
+.header-contents
+{
+  min-height: 56px;
+}
 .menu-open .ham {
   /* display: flex; */
   right: 15px;

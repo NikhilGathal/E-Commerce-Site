@@ -30,8 +30,11 @@ const slice = createSlice({
     {
       state.list = []
     },
+    clearCart: (state) => {
+      state.list = []; // Clear the cart items
+  },
     addCartItem(state, action) {
-      console.log(action);
+      // console.log(action);
       
       const existingItemIndex = findItemIndex(state.list, action)
       if (existingItemIndex !== -1) state.list[existingItemIndex].quantity += 1
@@ -49,6 +52,7 @@ const slice = createSlice({
     },
     decreaseCartItemQuantity(state, action) {
       const existingItemIndex = findItemIndex(state.list, action)
+      if (existingItemIndex !== -1) 
       state.list[existingItemIndex].quantity -= 1
       if (state.list[existingItemIndex].quantity === 0)
         state.list.splice(existingItemIndex, 1)
@@ -63,7 +67,7 @@ const slice = createSlice({
     .map(({ productId, quantity }) => {
       const cartProduct = products.list.find(
         (product) => {
-          console.log(product.id, productId);
+          // console.log(product.id, productId);
           // console.log(product.id === productId);
         return  product.id === productId
          
@@ -72,7 +76,7 @@ const slice = createSlice({
        
         
       )
-      console.log(cartProduct);
+      // console.log(cartProduct);
       
       return { ...cartProduct, quantity }
      

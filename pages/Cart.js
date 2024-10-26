@@ -11,22 +11,30 @@ import {
   getCartItems,
   getCartLoadingState,
   loadCartItems,
+  loadCartItemsFromLocal,
   removeallCartItem,
 } from '../store/slices/cartSlice'
 import { Link, useOutletContext } from 'react-router-dom'
 import { useEffect } from 'react'
+import { loadWishItem } from '../store/slices/wishListSlice'
 
 export default function Cart() {
-  const [, dark] = useOutletContext()
+  // const [, dark] = useOutletContext()
 
 
-  const cartItems = useSelector(getAllCartItems)
+
   // console.log(cartItems);
+  const [setissign,dark,isdark,issign,userlogin] = useOutletContext()
+
+
+
   
   // const isLoading = useSelector(getCartLoadingState) // Loading state selector
   const error = useSelector(getCartError)            // Error state selector
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true);
+
+    const cartItems = useSelector(getAllCartItems)
 
 useEffect(() => {
   // Simulate data fetching (if you're getting cart items from an API/localStorage, etc.)

@@ -18,12 +18,15 @@ import ProductShimmer from '../components/ProductShimmer'
 import Footer from '../components/Footer'
 
 export default function Home() {
+  
+  
   const [query, setquery] = useState('')
   const [query1, setquery1] = useState('')
   const productsList = useSelector(getAllProducts)
   // console.log(productsList);
   
-  const [setissign,dark,isdark,issign] = useOutletContext()
+  const [setissign,dark,isdark,issign,userlogin] = useOutletContext()
+  // console.log(userlogin);
   // console.log(issign);
 
   const dispatch = useDispatch()
